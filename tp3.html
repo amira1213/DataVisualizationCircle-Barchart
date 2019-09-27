@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>D3: Drawing divs with data</title>
+    <script type="text/javascript" src="d3.v3.js"></script>
+    <style type="text/css">
+    
+      div.bar {
+        display: inline-block;
+        width: 20px;
+        height: 75px;
+        background-color: teal;
+        margin-right: 2px;
+      }
+    
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+                       var i;  var dataset =[]; var dataset2=[];
+
+                         var w=1000; var h=400;
+
+                
+
+      d3.csv("us-cities.csv", function(error, d) {
+        if (error) { //If error is not null, something went wrong.
+                console.log("erreer"+error); //Log the error.
+                       } 
+               else { 
+
+                for(i=0; i<15; i++)
+                {
+                  dataset[i]=d[i].population; 
+              
+                    }
+                }
+
+                  var svg = d3.select("body")
+            .append("svg")
+            .attr("width",w)
+            .attr("height",h);
+
+        
+
+   
+   svg.selectAll("rect")
+   .data(dataset)
+   .enter()
+   .append("rect")
+   .attr("x", function(d, i) {
+    return i * (400 / 15);
+})
+   .attr("y", function(d) {
+    return 300 - (d/30000);  // Hauteur moins la valeur de la donnée
+}).attr("width", 400 / 15 - 1)
+
+  .attr("height", function(d) {
+    return d/30000;  // Juste la valeur de la donnée
+})
+.attr("fill", "red");
+
+
+    
+
+
+ });
+
+
+
+
+
+
+
+
+    
+    
+     
+
+
+
+     d3.csv("us-productivity.csv", function(error, d) { 
+        if (error) { //If error is not null, something went wrong.
+                console.log("erreer"+error); //Log the error.
+                       } 
+               else { 
+
+                for(i=0; i<15; i++)
+                {
+                  console.log("la prod est"+d[i].value);
+                dataset2[i]=d[i].value; 
+              
+                    }
+                }
+
+          var svg = d3.select("body")
+            .append("svg")
+            .attr("width",w)
+            .attr("height",300);
+
+   
+   svg.selectAll("rect")
+   .data(dataset2)
+   .enter()
+   .append("rect")
+   .attr("x", function(d, i) {
+    return i * (400 / 15);
+})
+   .attr("y", function(d) {
+    return 200 - (d*60);  // Hauteur moins la valeur de la donnée
+}).attr("width", 400 / 15 - 1)
+
+  .attr("height", function(d) {
+    return d*60;  // Juste la valeur de la donnée
+})
+.attr("fill", "black");
+
+
+    
+
+
+ });
+    </script>
+  </body>
+</html>

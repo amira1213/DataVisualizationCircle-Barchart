@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Spécialités Master</title>
+		<script type="text/javascript" src="d3.v3.js"></script>
+		<style type="text/css">
+		
+			div.bar {
+				display: inline-block;
+				width: 40px;
+				height: 75px;
+				background-color: teal;
+				margin-right: 1px;
+			}
+			body
+			{
+
+				background: #222;
+			}
+		
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript">
+
+				d3.csv("World_Cities_Location_table.csv", function(error, d) {
+			  if (error) { //If error is not null, something went wrong.
+	              console.log(error); //Log the error.
+	                     } 
+               else { //If no error, the file loaded correctly. Yay!
+	             // console.log(d); //Log the data.
+                    }
+		
+			var dataset1 = [ ];      var spec=["RSD","MIL","SII","MIV","MIND","HPC","BIO"];
+
+			 var i=0; var g=0;
+
+			   var amira= d3.select("body").selectAll("p");
+				amira.data(d)
+				.enter()
+				.append("p")
+				.text(function(d) { 
+         
+                if(i<14)
+       			   {dataset1[i]=d.nbDem1; i++; } 
+				if(i<14)
+				   {dataset1[i]=d.nbDem2; i++;}
+              
+
+
+				});
+
+          var cpt=0; var w=1200; var h=600; var dataset=[];
+
+
+          for(var l=0; l<14; l++) dataset[l]=dataset1[l];
+
+			dataset1[14]="RSD" ;        dataset1[15]="MIL" ;
+               dataset1[16]="SII" ;    dataset1[17]="MIV" ; 
+               dataset1[18]="MIND";    dataset1[19]="HPC" ; 
+              dataset1[20]="BIO";  
+
+
+          var svg = d3.select("body")
+            .append("svg")
+            .attr("width",w)
+            .attr("height",h);
+
+   
+   svg.selectAll("rect")
+   .data(dataset)
+   .enter()
+   .append("rect")
+   .attr("x", function(d, i) {
+    return i * (600 / 14);
+})
+   .attr("y", function(d) {
+    return 350 - d;  // Hauteur moins la valeur de la donnée
+}).attr("width", 600 / 14 - 1)
+
+  .attr("height", function(d) {
+    return d;  // Juste la valeur de la donnée
+})
+.attr("fill", function(d) {
+     cpt++;
+                  if(cpt==1) return "#C0392B";
+                  if(cpt==2) return "#CD6155";
+                  if(cpt==3) return "#9B59B6  ";
+                    if(cpt==4) return "#C39BD3";
+                    if(cpt==5) return "#2980B9";
+                    if(cpt==6) return "#5499C7";
+                    if(cpt==7)  return "#48C9B0 ";
+                    if(cpt==8)  return "#A3E4D7";
+                   if(cpt==11)  return "#F39C12";
+                   if(cpt==12)  return "#F5B041 ";
+                   if(cpt==9) return "#27AE60    ";
+                   if(cpt==10) return "#52BE80";
+                   if(cpt==13) return "#7F8C8D    ";
+                   if(cpt==14)  return "#B2BABB";
+});
+var amira=5; var e=-1;  var coord=[20,40,60,80,100,120,140]; 
+
+svg.selectAll("text")
+   .data(dataset1)
+   .enter()
+   .append("text").text(function(d,i) {
+         
+        return d;
+
+   }).attr("x", function(d, i) { 
+           if(i<14)    {return i * (600 / 14); }
+
+           if(i>=14) {return 700; }
+   })
+   .attr("y", function(d,i) {  
+
+          if(i<14)  { return (350 - (d )+11); } 
+
+    if(i>=14) {amira+=20; return amira;} 
+   }).attr("fill", "white")
+   .attr("font-weight", "bold")
+; 
+
+
+
+                                  
+                        
+ var lineData = [
+  { "x1": 670, "y1": 20, "x2": 690, "y2":20, "stroke" : "red" },
+  { "x1":670, "y1": 40, "x2": 690, "y2":40, "stroke" : "purple" },
+  { "x1": 670, "y1": 60, "x2": 690, "y2":60, "stroke" : "blue" },
+  { "x1": 670, "y1": 80, "x2": 690, "y2":80, "stroke" : "cyan" },
+  { "x1": 670 ,"y1": 100, "x2": 690, "y2":100, "stroke" : "green" },
+  { "x1": 670, "y1": 120, "x2": 690, "y2":120, "stroke" : "orange" },
+  { "x1": 670, "y1":140, "x2": 690, "y2":140, "stroke" : "grey" },
+  ];
+                   
+   var k=-1;
+
+                           
+                
+                
+                        var lines = svg.selectAll("line")
+                           .data(lineData)
+                           .enter()
+                           .append("line");
+
+                    var linesAttributes = lines
+                       .attr("x1", function (d) { return d.x1; })
+                       .attr("y1", function (d) { return d.y1; })
+                       .attr("x2", function (d) { return d.x2; })
+                       .attr("y2", function (d) { return d.y2; }).text("khra")
+                       .style("stroke", function (d) { return d.stroke; })
+                        .style("stroke-width", 6);
+
+
+
+                         
+
+
+
+
+  });
+                       
+
+                        
+
+                   
+
+			
+			
+		
+
+		</script>
+
+
+    <script type="text/javascript">
+
+
+
+    </script>
+	</body>
+</html>

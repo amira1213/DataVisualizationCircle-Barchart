@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Pop & prod -Cercles-</title>
+    <script type="text/javascript" src="d3.v3.js"></script>
+    <style type="text/css">
+   
+  body
+      {
+
+        background:  #F4ECF7  ;
+      }
+
+    
+    
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">var population =[];
+      
+                       var i;   var production=[]; var ville=[]; 
+
+                         var w=2000; var h=300;      var padding = 10;
+
+
+                
+
+      d3.csv("us-cities.csv", function(error, d) { console.log("valeur de random="+Math.random()*1000 );
+        if (error) { //If error is not null, something went wrong.
+                console.log("erreer"+error); //Log the error.
+                       } 
+               else { 
+
+                for(i=0; i<15; i++)
+                {
+                  console.log("la population est"+d[i].population);
+                  population[i]=d[i].population; 
+                  ville[i]=d[i].place;
+              
+                    }
+                }
+
+     
+      var rScale = d3.scale.linear()
+                 .domain([0, d3.max(population, function(d) { return d; })])
+                 .range([1, 8]);
+
+
+     
+
+var f=-1;
+             var am=-1,am1=-1;
+
+  //Create SVG element
+      var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height",400);
+
+      //Create circles
+      svg.selectAll("circle")
+         .data(population)
+         .enter()
+         .append("circle")
+         .attr("cx", function(d) { am++; 
+          if(am>0)
+            return 70*(am)+rScale(d3.max(population))*20;
+          else return rScale(population[am]);
+
+         })
+         .attr("cy","200" )
+         .attr("r", function(d) { f++;
+             return rScale(population[f]);
+         }).attr("fill", function(d,i) {
+                return "rgb(0, 0, " +  ((population[i])/10000) + ")";
+                });  
+
+      //Create labels 
+      var am1=-1;
+     svg.selectAll("text")
+         .data(population)
+         .enter()
+         .append("text")
+         .text(function(d,i) {
+            return population[i];
+         })
+         .attr("x", function(d,i) { am1++; 
+            if(am1>0)
+            return 70*(am1+2)+rScale(d3.max(population));
+            else return rScale(population[am1]);  
+
+        })
+         .attr("y", function(d,i) {
+            return 195-rScale(population[i]);})
+         .attr("font-family", "sans-serif")
+         .attr("font-size", "11px")
+.attr("fill", function(d,i) {
+                return "rgb(0, 0, " + ((population[i])/10000) + ")";
+                }).attr("font-weight", "bold");      
+
+   
+
+
+
+    
+
+
+ });
+
+
+
+
+
+
+
+
+    
+    
+     
+
+
+
+     d3.csv("us-productivity.csv", function(error, d) {  var w=1000; var ville=[]; 
+        if (error) { //If error is not null, something went wrong.
+                console.log("erreer"+error); //Log the error.
+                       } 
+               else { 
+
+                for(i=0; i<15; i++)
+                {
+                  console.log("la prod est"+d[i].value*105);
+                production[i]=d[i].value; 
+                ville[i]=d[i].state;
+              
+                    }
+                }
+
+                       
+
+      var rScale = d3.scale.linear()
+                 .domain([0, d3.max(production, function(d) { return d; })])
+                 .range([2, 22]);
+
+
+         
+
+var f=-1; var am=-1;
+
+  //Create SVG element
+      var svg = d3.select("body")
+            .append("svg")
+            .attr("width", 2000)
+            .attr("height", h);
+
+      //Create circles
+      svg.selectAll("circle")
+         .data(production)
+         .enter()
+         .append("circle")
+         .attr("cx", function(d) {
+           am++; 
+          if(am>0)
+            return 70*(am+1)+rScale(d3.min(production))*3;
+         else return rScale(production[am])*7;
+
+         })
+         .attr("cy","100")
+         .attr("r", function(d) { f++;
+           return rScale(production[f]);})
+        .attr("fill", function(d,i) {
+                return "rgb("+ (production[i])*105 + ","+"0,0)";
+                });
+          
+
+      //Create labels 
+      var am1=-1;
+     svg.selectAll("text")
+         .data(production)
+         .enter()
+         .append("text")
+         .text(function(d) {return d;
+         })
+       .attr("x", function(d,i) { 
+             am1++; 
+          if(am1>0)
+            return 70*(am1+1)+rScale(d3.min(production))*3-(rScale(production[am1]));
+         else return rScale(production[am1])*7-(rScale(production[am1]));
+
+        })
+         .attr("y", function(d) {
+            return 95-rScale(d)
+         })
+         .attr("font-family", "sans-serif")
+         .attr("font-size", "11px")
+.attr("fill", function(d,i) {
+                return "rgb("+ (production[i])*105 + ","+"0,0)";
+                }).attr("font-weight", "bold");   ;        
+
+    
+
+
+ });
+    </script>
+  </body>
+</html>

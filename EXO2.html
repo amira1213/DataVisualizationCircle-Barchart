@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>D3: Drawing divs with data</title>
+		<script type="text/javascript" src="d3.v3.js"></script>
+		<style type="text/css">
+		
+			div.bar {
+				display: inline-block;
+				width: 40px;
+				height: 75px;
+				background-color: teal;
+				margin-right: 1px;
+			}
+		
+		
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript">
+				d3.csv("villes.csv", function(error, d) {
+			  if (error) { //If error is not null, something went wrong.
+	              console.log(error); //Log the error.
+	                     } 
+               else { 
+	                   
+                    }
+		
+			
+			   var amira= d3.select("body").selectAll("p");
+				amira.data(d)
+				.enter()
+				.append("p")
+				.text(function(d) { 
+
+                if(d.Country=="Algeria")
+                	return d.City;
+
+                   
+				});
+
+
+				amira.data(d)
+				.enter()
+				.append("p")
+				.text(function(d) { 
+
+                if(d.Country=="Algeria" && d.Alt>600 )
+                	return d.City+"- Alt: "+d.Alt;
+   
+});
+});
+
+   
+      
+         
+
+		
+	
+      	
+		
+
+		</script>
+	</body>
+</html>
